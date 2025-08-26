@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 include(FetchContent)
 
-project(SmartHouse.Rf24Usb.Protocol.Test LANGUAGES CXX)
+project(SmartHouse.Rf24Usb.Protocol.Device.Test LANGUAGES CXX)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
