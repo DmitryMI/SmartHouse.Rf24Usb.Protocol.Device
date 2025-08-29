@@ -80,12 +80,18 @@ namespace SmartHouse::Rf24Usb::Protocol
 			m_Rf24.WhatHappened(txOk, txFail, rxOk);
 			if (rxOk)
 			{
+				std::vector<Rf24Packet> receivedPackets;
 				uint8_t pipe;
 				uint8_t size;
 				std::array<uint8_t, 32> data;
 				while (m_Rf24.Read(pipe, size, data))
 				{
-					WritePayload(pipe, size, data);
+					receivedPackets.push_back({ pipe, size, data });
+				}
+
+				for (const auto& packet : receivedPackets)
+				{
+					WritePayload(packet.m_Pipe, packet.m_Size, packet.m_Data);
 				}
 			}
 		}

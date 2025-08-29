@@ -37,6 +37,13 @@ namespace SmartHouse::Rf24Usb::Protocol
 		void Tick();
 
 	private:
+		struct Rf24Packet
+		{
+			uint8_t m_Pipe;
+			uint8_t m_Size;
+			std::array<uint8_t, 32> m_Data;
+		};
+
 		IUart& m_Uart;
 		IRf24& m_Rf24;
 		ITimer& m_Timer;
