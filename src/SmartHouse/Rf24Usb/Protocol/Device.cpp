@@ -176,12 +176,12 @@ namespace SmartHouse::Rf24Usb::Protocol
 		if (ok)
 		{
 			AckMessage ackMessage;
-			ackMessage.Serialize(ackBytes.data(), ackBytes.size());
+			ackBytes = m_UartEncoder.Serialize(ackMessage);
 		}
 		else
 		{
 			NackMessage nackMessage;
-			nackMessage.Serialize(ackBytes.data(), ackBytes.size());
+			ackBytes = m_UartEncoder.Serialize(nackMessage);
 		}
 
 		m_Uart.Write(ackBytes.data(), ackBytes.size());
@@ -189,17 +189,15 @@ namespace SmartHouse::Rf24Usb::Protocol
 
 	void Device::WriteReset()
 	{
-		std::array<uint8_t, 1> resetBytes;
 		ResetMessage resetMessage;
-		resetMessage.Serialize(resetBytes.data(), resetBytes.size());
+		auto resetBytes = m_UartEncoder.Serialize(resetMessage);
 		m_Uart.Write(resetBytes.data(), resetBytes.size());
 	}
 
 	void Device::WritePayload(uint8_t pipe, uint8_t size, const std::array<uint8_t, 32>& data)
 	{
 		PayloadMessage message{ pipe, size, data };
-		std::array<uint8_t, sizeof(PayloadMessage) + 1> bytes;
-		message.Serialize(bytes.data(), bytes.size());
+		auto bytes = m_UartEncoder.Serialize(message);
 		m_Uart.Write(bytes.data(), bytes.size());
 	}
 }

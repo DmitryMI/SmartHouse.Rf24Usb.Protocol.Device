@@ -10,6 +10,7 @@
 #include "SmartHouse/Rf24Usb/Protocol/IRf24.h"
 #include "SmartHouse/Rf24Usb/Protocol/IUart.h"
 #include "SmartHouse/Rf24Usb/Protocol/ITimer.h"
+#include "SmartHouse/Rf24Usb/Protocol/Encoder.h"
 #include "SmartHouse/Rf24Usb/Protocol/Decoder.h"
 #include "SmartHouse/Rf24Usb/Protocol/Constants.h"
 
@@ -44,6 +45,7 @@ namespace SmartHouse::Rf24Usb::Protocol
 		std::atomic<bool> m_UartError = false;
 		std::atomic<bool> m_Rf24Irq = false;
 		std::atomic<bool> m_TimerElapsed = false;
+		Encoder<0> m_UartEncoder;
 		Decoder<MaxMessageSize> m_UartDecoder;
 		bool m_IsConfigured = false;
 		bool m_FailureLockout = false;
