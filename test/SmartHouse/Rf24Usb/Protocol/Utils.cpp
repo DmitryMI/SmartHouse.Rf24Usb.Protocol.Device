@@ -5,19 +5,6 @@ using namespace testing;
 
 namespace SmartHouse::Rf24Usb::Protocol
 {
-	std::array<uint8_t, sizeof(ConfigMessage) + 1> Serialize(const ConfigMessage& config)
-	{
-		std::array<uint8_t, sizeof(ConfigMessage) + 1> serializedConfig;
-		size_t serializedConfigSize = config.Serialize(serializedConfig.data(), serializedConfig.size());
-		return serializedConfig;
-	}
-
-	std::array<uint8_t, sizeof(PayloadMessage) + 1> Serialize(const PayloadMessage& payload)
-	{
-		std::array<uint8_t, sizeof(PayloadMessage) + 1> serializedPayload;
-		size_t serializedSize = payload.Serialize(serializedPayload.data(), serializedPayload.size());
-		return serializedPayload;
-	}
 
 	void ExpectUartReadWrite(IUartMock& uart, std::queue<uint8_t>& readQueue, std::queue<uint8_t>& writeQueue)
 	{

@@ -1,5 +1,6 @@
 #include "Utils.h"
 #include "SmartHouse/Rf24Usb/Protocol/Device.h"
+#include "SmartHouse/Rf24Usb/Protocol/Encoder.h"
 
 using namespace testing;
 
@@ -8,12 +9,13 @@ namespace SmartHouse::Rf24Usb::Protocol
 
 	TEST(DeviceTest, NormalSequenceTest)
 	{
+		Encoder<MaxMessageSize> encoder;
 		constexpr auto configMessage = CreateConfigMessage();
-		auto serializedConfig = Serialize(configMessage);
+		auto serializedConfig = encoder.Serialize(configMessage);
 		constexpr auto hostPayloadMessage1 = CreateHostPayloadMessage(10, 0);
-		auto hostPayloadSerialized1 = Serialize(hostPayloadMessage1);
+		auto hostPayloadSerialized1 = encoder.Serialize(hostPayloadMessage1);
 		constexpr auto hostPayloadMessage2 = CreateHostPayloadMessage(32, 13);
-		auto hostPayloadSerialized2 = Serialize(hostPayloadMessage2);
+		auto hostPayloadSerialized2 = encoder.Serialize(hostPayloadMessage2);
 		constexpr PayloadMessage devicePayloadMessage{ 3, 2, {0xAB, 0xCD} };
 
 		std::queue<uint8_t> uartHostToDevice;
@@ -109,8 +111,9 @@ namespace SmartHouse::Rf24Usb::Protocol
 
 	TEST(DeviceTest, UartBitFlipConfigurationTest)
 	{
+		Encoder<MaxMessageSize> encoder;
 		constexpr auto configMessage = CreateConfigMessage();
-		auto serializedConfig = Serialize(configMessage);
+		auto serializedConfig = encoder.Serialize(configMessage);
 		ITimer::Handle timerHandle;
 		ITimer::Elapsed timerCallback;
 

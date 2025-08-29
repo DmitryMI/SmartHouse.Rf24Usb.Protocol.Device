@@ -27,8 +27,6 @@ namespace SmartHouse::Rf24Usb::Protocol
 		return config;
 	}
 
-	std::array<uint8_t, sizeof(ConfigMessage) + 1> Serialize(const ConfigMessage& config);
-
 	constexpr PayloadMessage CreateHostPayloadMessage(size_t size, size_t offset)
 	{
 		PayloadMessage payload;
@@ -40,8 +38,6 @@ namespace SmartHouse::Rf24Usb::Protocol
 		}
 		return payload;
 	}
-
-	std::array<uint8_t, sizeof(PayloadMessage) + 1> Serialize(const PayloadMessage& payload);
 
 	template<size_t Size>
 	void Write(std::queue<uint8_t>& queue, size_t from, size_t to, const std::array<uint8_t, Size>& arr)

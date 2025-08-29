@@ -44,7 +44,7 @@ namespace SmartHouse::Rf24Usb::Protocol
 		std::atomic<bool> m_UartError = false;
 		std::atomic<bool> m_Rf24Irq = false;
 		std::atomic<bool> m_TimerElapsed = false;
-		Decoder m_UartDecoder;
+		Decoder<MaxMessageSize> m_UartDecoder;
 		bool m_IsConfigured = false;
 		bool m_FailureLockout = false;
 		ITimer::Elapsed m_TimerElapsedCallback = [&](ITimer::Handle handle) {OnTimerElapsed(handle); };
